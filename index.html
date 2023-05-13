@@ -16,7 +16,6 @@
 </head>
 
 <body>
-
     <div id="button" class="button">
         <div class="road">
             <div class="start">Ship Order</div>
@@ -26,7 +25,6 @@
                 <span>Order Shipped</span>
             </div>
         </div>
-
         <div class="button-content">
             <div class="product">
                 <div class="content">
@@ -68,69 +66,66 @@
         let status = "order";
         let isProcessing = false;
         const btn = document.getElementById("button");
-        btn.addEventListener("click", (e) => {
-            if (isProcessing === false) {
-                isProcessing = true;
-                switch (status) {
-                    case "order":
-                        const start = btn.getElementsByClassName("start")[0];
-                        const contentBtn = btn.getElementsByClassName("button-content")[0];
-                        const roadMarking = btn.getElementsByClassName("road-marking")[0];
+        const start = btn.getElementsByClassName("start")[0];
+        const contentBtn = btn.getElementsByClassName("button-content")[0];
+        const roadMarking = btn.getElementsByClassName("road-marking")[0];
+        const truck = contentBtn.getElementsByClassName("truck")[0];
+        const door1 = truck.getElementsByClassName("door-1")[0];
+        const door2 = truck.getElementsByClassName("door-2")[0];
+        const product = contentBtn.getElementsByClassName("product")[0];
+        const productContent = product.getElementsByClassName("content")[0];
+        const lightArea = truck.getElementsByClassName("light-area")[0];
+        const end = btn.getElementsByClassName("end")[0];
 
-                        start.style.display = "none";
-                        contentBtn.style.visibility = "visible";
+        btn.addEventListener("click", () => {
+            orderClick();
+        })
 
-                        const truck = contentBtn.getElementsByClassName("truck")[0];
-                        truck.style.marginLeft = "30px";
-
-                        const door1 = truck.getElementsByClassName("door-1")[0];
-                        door1.style.transform = "rotate(145deg)";
-
-                        const door2 = truck.getElementsByClassName("door-2")[0];
-                        door2.style.transform = "rotate(-145deg)";
-
-                        const product = contentBtn.getElementsByClassName("product")[0];
-                        const productContent = product.getElementsByClassName("content")[0];
-                        productContent.style.marginRight = "-150px";
-                        setTimeout(() => {
-                            door1.style.transform = "rotate(0deg)";
-                            door2.style.transform = "rotate(0deg)";
-                        }, 1000);
-
-                        setTimeout(() => {
-                            productContent.style.visibility = "hidden";
-                            truck.style.marginLeft = "-200px";
-                        }, 2000);
-
-                        setTimeout(() => {
-                            const lightArea = truck.getElementsByClassName("light-area")[0];
-                            lightArea.style.visibility = "visible";
-                        }, 2500);
-
-                        setTimeout(() => {
-                            truck.style.marginLeft = "-20px";
-                            roadMarking.style.display = "block";
-                            roadMarking.style.marginLeft = "-300px";
-                        }, 2800);
-
-                        setTimeout(() => {
-                            truck.style.marginLeft = "550px";
-                            roadMarking.style.display = "none";
-                            const end = btn.getElementsByClassName("end")[0];
-                            end.style.display = "block";
-                            isProcessing = false;
-                            status = "shiped";
-                        }, 3500);
-                        break;
-
-                    case "shiped":
-                        location.reload();
-                        break;
-                }
+        const orderClick = function () {
+            if (isProcessing == true) {
+                return;
             }
-        });
-    </script>
+            isProcessing = true;
+            if (status == "shipped") {
+                location.reload();
+                return;
+            }
+            start.style.display = "none";
+            contentBtn.style.visibility = "visible";
+            truck.style.marginLeft = "30px";
+            door1.style.transform = "rotate(145deg)";
+            door2.style.transform = "rotate(-145deg)";
+            productContent.style.marginRight = "-150px";
+            timeoutEvent();
 
+        }
+        
+        const timeoutEvent = function () {
+            setTimeout(() => {
+                door1.style.transform = "rotate(0deg)";
+                door2.style.transform = "rotate(0deg)";
+            }, 1000);
+            setTimeout(() => {
+                productContent.style.visibility = "hidden";
+                truck.style.marginLeft = "-200px";
+            }, 2000);
+            setTimeout(() => {
+                lightArea.style.visibility = "visible";
+            }, 2500);
+            setTimeout(() => {
+                truck.style.marginLeft = "-20px";
+                roadMarking.style.display = "block";
+                roadMarking.style.marginLeft = "-300px";
+            }, 2800);
+            setTimeout(() => {
+                truck.style.marginLeft = "550px";
+                roadMarking.style.display = "none";
+                end.style.display = "block";
+                isProcessing = false;
+                status = "shipped";
+            }, 3500);
+        }
+    </script>
 </body>
 
 </html>
